@@ -1,7 +1,6 @@
 name: Publish Docker image
 on:
-  release:
-    types: [published]
+  push:
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
@@ -9,11 +8,17 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: login
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: mischal/releasing-test/hello-world
-          tag_with_ref: true
+          context: ./
+          file: ./Dockerfile
+          tags: releasing-test/hello-world
+          push: true
+
