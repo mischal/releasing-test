@@ -2,9 +2,8 @@ name: Test
 on:
   push:
     branches:
-      - !refs/tags/* # only run on branches
-  release:
-    types: [published]
+      - '!refs/tags/*' # only run on branches
+
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
