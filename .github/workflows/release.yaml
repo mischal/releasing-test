@@ -14,7 +14,8 @@ jobs:
       # image tag
       - name: set image tag
         run: |
-          echo ::set-output name=tag::${GITHUB_REF:1}-${GITHUB_SHA::8}
+          VERSION=${GITHUB_REF##*/}
+          echo ::set-output name=tag::${VERSION:1}-${GITHUB_SHA::8}
         id: image
 
       - name: checkout
