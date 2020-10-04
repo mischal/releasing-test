@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Publish
-        uses: jerray/publish-docker-action@v1.0.0
+        uses: jerray/publish-docker-action@v1.0.5
         with:
           registry: docker.pkg.github.com
           repository: mischal/releasing-test/hello-world
