@@ -17,6 +17,6 @@ jobs:
       - name: Push to GitHub Packages
         run: |
           echo "ref: ${{ github.ref }}"
-          echo "event: $${{ toJson(github.event) }}"
+          echo "event: ${{ toJson(github.event) }}"
           docker build . -t docker.pkg.github.com/mischal/releasing-test/hello-world
           docker push docker.pkg.github.com/mischal/releasing-test/hello-world
