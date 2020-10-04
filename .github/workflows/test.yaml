@@ -15,5 +15,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push to GitHub Packages
-        run: docker build . -t docker.pkg.github.com/mischal/releasing-test/hello-world
-      - run: docker push docker.pkg.github.com/mischal/releasing-test/hello-world
+        run: |
+          echo "ref: ${{ github.ref }}"
+          echo "event: $${{ toJson(github.event) }}"
+          docker build . -t docker.pkg.github.com/mischal/releasing-test/hello-world
+          docker push docker.pkg.github.com/mischal/releasing-test/hello-world
