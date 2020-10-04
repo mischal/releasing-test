@@ -12,6 +12,7 @@ jobs:
       - name: Publish
         uses: jerray/publish-docker-action@v1.0.0
         with:
+          registry: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           auto_tag: true
