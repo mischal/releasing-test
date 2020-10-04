@@ -8,15 +8,30 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: login
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push to GitHub Packages
+
+
+      # image tag
+      - name: set image tag
+        run: |
+          if [[ "$GITHUB_REF" == "master" ]]; then
+            echo ::set-output name=tag::latest
+            echo ::set-output name=publish::true
+          else
+            echo ::set-output name=tag::${GITHUB_REF}-${GITHUB_SHA::8}
+          fi
+        id: image
+
+      - name: build image
+        env:
+          IMAGE_TAG:
         run: |
           echo "ref: ${{ github.ref }}"
           echo "event: ${{ toJson(github.event) }}"
-          docker build . -t docker.pkg.github.com/mischal/releasing-test/hello-world
-          docker push docker.pkg.github.com/mischal/releasing-test/hello-world
+          docker build . -t docker.pkg.github.com/mischal/releasing-test/hello-world:${{ steps.image.outputs.tag }}
+      - name: Push image
+        run: |
+          docker login docker.pkg.github.com --username $USERNAME --password $PASSWORD
+          docker push docker.pkg.github.com/mischal/releasing-test/hello-world:${{ steps.image.outputs.tag }}
+        env:
+          USERNAME: ${{ github.actor }}
+          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
