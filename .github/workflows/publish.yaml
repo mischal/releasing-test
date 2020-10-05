@@ -12,7 +12,7 @@ jobs:
       - name: Publish
         uses: jerray/publish-docker-action@v1.0.5
         with:
-          registry: docker.pkg.github.com
+          registry: ghcr.io
           repository: mischal/releasing-test/hello-world
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
