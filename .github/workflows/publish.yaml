@@ -13,7 +13,7 @@ jobs:
         uses: jerray/publish-docker-action@v1.0.5
         with:
           registry: ghcr.io
-          repository: mischal/releasing-test/hello-world
+          repository: mischal/releasing-test/hello-world2
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
           auto_tag: true
