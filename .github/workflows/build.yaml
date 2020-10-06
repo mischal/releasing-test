@@ -16,7 +16,7 @@ jobs:
           echo "TAG_NAME: ${TAG_NAME}"
           echo "REF_TYPE: ${REF_TYPE}"
 
-          if [[ "REF_TYPE" == "ref/tags" ]]; then
+          if [[ "REF_TYPE" == "refs/tags" ]]; then
             echo ::set-output name=tag::${TAG_NAME:1}
           else
             if [[ "$TAG_NAME" == "master" ]]; then
