@@ -11,12 +11,18 @@ jobs:
       - name: set image tag
         run: |
           TAG_NAME=${GITHUB_REF##*/}
-          if [[ "$TAG_NAME" == "master" ]]; then
-            echo ::set-output name=tag::latest
+          REF_TYPE=${GITHUB_REF%/*}
+
+          if [[ "REF_TYPE" == "ref/tags" ]]; then
+            echo ::set-output name=tag::${TAG_NAME:1}
           else
-            TAG_NAME=${TAG_NAME////-}
-            echo ::set-output name=tag::${TAG_NAME}-${GITHUB_SHA::8}
-          fi
+            if [[ "$TAG_NAME" == "master" ]]; then
+              echo ::set-output name=tag::latest
+            else
+              TAG_NAME=${TAG_NAME////-}
+              echo ::set-output name=tag::${TAG_NAME}-${GITHUB_SHA::8}
+            fi
+        fi
         id: image
 
       - name: Checkout
