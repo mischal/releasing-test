@@ -22,7 +22,7 @@ jobs:
               TAG_NAME=${TAG_NAME////-}
               echo ::set-output name=tag::${TAG_NAME}-${GITHUB_SHA::8}
             fi
-        fi
+          fi
         id: image
 
       - name: Checkout
