@@ -17,12 +17,18 @@ jobs:
           echo "REF_TYPE: ${REF_TYPE}"
 
           if [[ "REF_TYPE" == "refs/tags" ]]; then
+            echo "REF_TYPE is tag"
+            echo "tag is: ${TAG_NAME:1}"
             echo ::set-output name=tag::${TAG_NAME:1}
           else
+          echo "REF_TYPE is not tag"
             if [[ "$TAG_NAME" == "master" ]]; then
+              echo "branch is master, using latest"
               echo ::set-output name=tag::latest
             else
+              echo "branch is $TAG_NAME"
               TAG_NAME=${TAG_NAME////-}
+              echo "branch is $TAG_NAME"
               echo ::set-output name=tag::${TAG_NAME}-${GITHUB_SHA::8}
             fi
           fi
