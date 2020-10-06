@@ -13,6 +13,9 @@ jobs:
           TAG_NAME=${GITHUB_REF##*/}
           REF_TYPE=${GITHUB_REF%/*}
 
+          echo "TAG_NAME: ${TAG_NAME}"
+          echo "REF_TYPE: ${REF_TYPE}"
+
           if [[ "REF_TYPE" == "ref/tags" ]]; then
             echo ::set-output name=tag::${TAG_NAME:1}
           else
