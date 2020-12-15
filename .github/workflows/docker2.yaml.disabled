@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: master
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_PAT }}
+      -
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/mischal/demo-app:latest
+          build-args: |
+            arg1=value1
+            arg2=value2
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
