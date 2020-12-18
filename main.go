@@ -8,7 +8,7 @@ import (
  "io"
  "fmt"
 )
-
+err
 func handler(w http.ResponseWriter, r *http.Request) {
  io.WriteString(w, "Hello, world!\n")
 }
