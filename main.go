@@ -19,6 +19,7 @@ func router() *mux.Router {
  return r
 }
 
+
 func main() {
  fmt.Println("Hello, world.")
  router := router()
