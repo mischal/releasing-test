@@ -4,11 +4,19 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      -
+        name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: ghcr.io/mischal/demo-app:latest # list of Docker images to use as base name for tags
+          tag-sha: true # add git short SHA as Docker tag
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -25,10 +33,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/mischal/demo-app:latest
-          build-args: |
-            arg1=value1
-            arg2=value2
+          tags: ${{ steps.docker_meta.outputs.tags }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
