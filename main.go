@@ -21,7 +21,7 @@ func router() *mux.Router {
 
 
 func main() {
- fmt.Println("Hello, world.")
+ fmt.Println("Hello, world!")
  router := router()
  srv := &http.Server{
         Handler: router,
