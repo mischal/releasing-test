@@ -6,12 +6,15 @@ https://docs.github.com/en/free-pro-team@latest/packages/managing-container-imag
 
 
 
-## use cases
 
-create release from tag
+## github actions
 
-```
-git tag v0.6
-git push --tag
-```
+### pullrequest.yaml
+build only für pullrequests
+
+### release.yml
+erstellt ein docker image und pusht es in die ghcr
+
+- wird ein tag gesetzt = release
+- kann auch manuell gestartet werden (z.b. für images ab branches)
 
